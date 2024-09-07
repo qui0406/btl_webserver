@@ -18,15 +18,14 @@ services:
     build:
       context: ./nginx/
     ports:
-
       - 80:80
       - 443:443
     volumes:
       - ./html/:/usr/share/nginx/html/
       - ./nginx/conf.d/:/etc/nginx/conf.d/
-      - ./certs/selfsigned.crt/:/etc/ssl/certs/selfsigned.crt/
-      - ./certs/selfsigned.key/:/etc/ssl/private/selfsigned.key/
-      - static_files:/usr/src/app/staticfiles
+      - ./nginx/certs/selfsigned.crt/:/etc/ssl/certs/selfsigned.crt/
+      - ./nginx/certs/selfsigned.key/:/etc/ssl/private/selfsigned.key/
+      - static_files:/usr/src/app/staticfiles    
 
   dns:
     build:
@@ -43,11 +42,13 @@ services:
     build: proxy
     ports:
       - "8000:8000"
-  main: 
-    build: ./html/main/ 
-  secondary:
-    build: ./html/secondary/
+  # main: 
+  #   build: ./html/main/ 
+  # secondary:
+  #   build: ./html/secondary/
 
+  # loadbalancing:
+   
 volumes:
   static_files:
 
